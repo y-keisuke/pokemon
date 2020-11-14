@@ -29,8 +29,8 @@ type PokemonBase struct {
 	HP        int `json:"hp"`
 	Attack    int `json:"attack"`
 	Defense   int `json:"defense"`
-	SpAttack  int `json:"sp_attack"`
-	SpDefense int `json:"sp_defense"`
+	SpAttack  int `json:"spattack"`
+	SpDefense int `json:"spdefense"`
 	Speed     int `json:"speed"`
 }
 
