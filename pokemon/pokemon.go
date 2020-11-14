@@ -2,7 +2,7 @@ package pokemon
 
 import (
 	"errors"
-	"pokemon/api/db"
+	"pokemon/db"
 )
 
 type Pokemon struct {

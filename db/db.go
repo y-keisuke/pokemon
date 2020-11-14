@@ -35,7 +35,7 @@ type PokemonBase struct {
 }
 
 func GetPokemonCollection() PokemonCollection {
-	raw, err := ioutil.ReadFile("./api/pokedex.json")
+	raw, err := ioutil.ReadFile("./pokedex.json")
 	if err != nil {
 		fmt.Println(err.Error())
 		os.Exit(1)

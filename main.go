@@ -1,11 +1,11 @@
-package api
+package main
 
 import (
 	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
-	pokemon2 "pokemon/api/pokemon"
+	pokemon2 "pokemon/pokemon"
 )
 
 func pokemonToJson(w http.ResponseWriter, r *http.Request) {
