@@ -15,23 +15,22 @@ type Pokemon struct {
 	Speed     int    `json:"speed"`
 }
 
-func GetPokemonBy(name string) (Pokemon, error) {
+func GetPokemonBy(name string) (*Pokemon, error) {
 	pokemonCollection := getPokemonCollection()
 	for _, pokemon := range pokemonCollection.Pokemons {
 		if pokemon.Name.Japanese == name {
 			return getPokemonStruct(pokemon), nil
 		}
 	}
-
-	return Pokemon{}, errors.New("ポケモンが見つかりません")
+	return nil, errors.New("ポケモンが見つかりません")
 }
 
 func getPokemonCollection() db.PokemonCollection {
 	return db.GetPokemonCollection()
 }
 
-func getPokemonStruct(pokemon db.PokemonData) Pokemon {
-	return Pokemon{
+func getPokemonStruct(pokemon db.PokemonData) *Pokemon {
+	return &Pokemon{
 		Name: pokemon.Name.Japanese,
 		HP: pokemon.Base.HP,
 		Attack: pokemon.Base.Attack,

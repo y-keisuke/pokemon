@@ -1,29 +1,30 @@
-package main
+package api
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
 	pokemon2 "pokemon/api/pokemon"
 )
 
-func pokemonJson(w http.ResponseWriter, r *http.Request) {
-	pokemon, err := pokemon2.GetPokemonBy("ヒトカゲ")
-	fmt.Fprintf(w, "Welcome to the HomePage!")
-	fmt.Println("Endpoint Hit: homePage")
+func pokemonToJson(w http.ResponseWriter, r *http.Request) {
+	name := r.FormValue("name")
+	pokemon, err := pokemon2.GetPokemonBy(name)
+	if err != nil {
+		log.Writer()
+		http.Error(w, fmt.Sprintf("{\"err\":\"%s\"}", err), 200)
+		return
+	}
+	pokemonJson, _ := json.Marshal(pokemon)
+	fmt.Fprint(w, fmt.Sprintf("%+v", string(pokemonJson)))
 }
 
 func handleRequests() {
-	http.HandleFunc("/", pokemonJson)
+	http.HandleFunc("/", pokemonToJson)
 	log.Fatal(http.ListenAndServe(":8081", nil))
 }
 
 func main() {
-	pokemon, err := pokemon2.GetPokemonBy("ヒトカゲ")
-	if err != nil {
-		fmt.Println(err)
-	} else {
-		fmt.Println(pokemon)
-	}
-	//handleRequests()
+	handleRequests()
 }
