@@ -22,7 +22,7 @@ func pokemonToJson(w http.ResponseWriter, r *http.Request) {
 
 func handleRequests() {
 	http.HandleFunc("/", pokemonToJson)
-	log.Fatal(http.ListenAndServe(":8081", nil))
+	log.Fatal(http.ListenAndServe(":18888", nil))
 }
 
 func main() {
