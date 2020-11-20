@@ -30,7 +30,7 @@ jobs:
         fi
 
     - name: Build
-      run: GOOS=linux GOARCH=amd64 go build main.go -v .
+      run: GOOS=linux GOARCH=amd64 go build main.go
 
     - name: Test
       run: go test -v .
