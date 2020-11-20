@@ -39,13 +39,23 @@ jobs:
     runs-on: ubuntu-latest
     needs: Test
     steps:
-      - name: deploy
-        env:
-          SECRET_KEY: ${{ secrets.SECRET_KEY }}
-          SAKURA_USER: ${{ secrets.SAKURA_USER }}
-          SAKURA_HOST: ${{ secrets.SAKURA_HOST }}
-          SAKURA_PORT: ${{ secrets.SAKURA_PORT }}
-        run: |
-          echo "$SECRET_KEY" > secret_key
-          chmod 600 secret_key
-          scp -P ${{ secrets.SAKURA_PORT }} -oStrictHostKeyChecking=no -i secret_key ${SAKURA_USER}@${SAKURA_HOST}:~/
+    - uses: actions/checkout@v1
+    - name: scp
+      uses: lbejiuk/scp_action@v1
+      with:
+        public_key: ${{secrets.SECRET_KEY}}
+        ssh_port: ${{ secrets.SAKURA_PORT }}
+        ssh_username: ${{ secrets.SAKURA_USER }}
+        ssh_host: ${{ secrets.SAKURA_HOST }}
+        source: 'main'
+        target: '/home/keisuke'
+
+#        env:
+#          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+#          SAKURA_USER: ${{ secrets.SAKURA_USER }}
+#          SAKURA_HOST: ${{ secrets.SAKURA_HOST }}
+#          SAKURA_PORT: ${{ secrets.SAKURA_PORT }}
+#        run: |
+#          echo "$SECRET_KEY" > secret_key
+#          chmod 600 secret_key
+#          scp -P ${{ secrets.SAKURA_PORT }} -oStrictHostKeyChecking=no -i secret_key ${SAKURA_USER}@${SAKURA_HOST}:~/
