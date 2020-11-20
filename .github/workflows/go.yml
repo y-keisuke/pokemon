@@ -30,7 +30,7 @@ jobs:
         fi
 
     - name: Build
-      run: go build -v .
+      run: GOOS=linux GOARCH=amd64 go build main.go -v .
 
     - name: Test
       run: go test -v .
@@ -48,4 +48,4 @@ jobs:
         run: |
           echo "$SECRET_KEY" > secret_key
           chmod 600 secret_key
-          ssh -vvv -p ${{ secrets.SAKURA_PORT }} -oStrictHostKeyChecking=no -i secret_key ${SAKURA_USER}@${SAKURA_HOST} "sudo sh /var/app/build.sh"
+          scp -P ${{ secrets.SAKURA_PORT }} -oStrictHostKeyChecking=no -i secret_key ${SAKURA_USER}@${SAKURA_HOST}:~/
