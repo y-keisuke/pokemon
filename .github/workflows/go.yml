@@ -35,21 +35,33 @@ jobs:
     - name: Test
       run: go test -v .
 
-  deploy:
-    runs-on: ubuntu-latest
-    needs: Test
-    steps:
-      - name: scp
-        env:
-          SECRET_KEY: ${{ secrets.SECRET_KEY }}
-          SAKURA_USER: ${{ secrets.SAKURA_USER }}
-          SAKURA_HOST: ${{ secrets.SAKURA_HOST }}
-          SAKURA_PORT: ${{ secrets.SAKURA_PORT }}
-        run: |
-          echo "$SECRET_KEY" > secret_key
-          ls
-          chmod 600 secret_key
-          scp -P ${{ secrets.SAKURA_PORT }} -o 'StrictHostKeyChecking no' -i secret_key main ${SAKURA_USER}@${SAKURA_HOST}:/var/app
+    - name: scp
+      env:
+        SECRET_KEY: ${{ secrets.SECRET_KEY }}
+        SAKURA_USER: ${{ secrets.SAKURA_USER }}
+        SAKURA_HOST: ${{ secrets.SAKURA_HOST }}
+        SAKURA_PORT: ${{ secrets.SAKURA_PORT }}
+      run: |
+        echo "$SECRET_KEY" > secret_key
+        ls
+        chmod 600 secret_key
+        scp -P ${{ secrets.SAKURA_PORT }} -o 'StrictHostKeyChecking no' -i secret_key main ${SAKURA_USER}@${SAKURA_HOST}:/var/app
+
+#  deploy:
+#    runs-on: ubuntu-latest
+#    needs: Test
+#    steps:
+#      - name: scp
+#        env:
+#          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+#          SAKURA_USER: ${{ secrets.SAKURA_USER }}
+#          SAKURA_HOST: ${{ secrets.SAKURA_HOST }}
+#          SAKURA_PORT: ${{ secrets.SAKURA_PORT }}
+#        run: |
+#          echo "$SECRET_KEY" > secret_key
+#          ls
+#          chmod 600 secret_key
+#          scp -P ${{ secrets.SAKURA_PORT }} -o 'StrictHostKeyChecking no' -i secret_key main ${SAKURA_USER}@${SAKURA_HOST}:/var/app
 
 #    - uses: actions/checkout@v1
 #    - name: scp
