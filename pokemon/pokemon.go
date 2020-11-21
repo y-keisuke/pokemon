@@ -22,7 +22,7 @@ func GetPokemonBy(name string) (*Pokemon, error) {
 			return getPokemonStruct(pokemon), nil
 		}
 	}
-	return nil, errors.New("ポケモンが見つかりません")
+	return nil, errors.New("ポケモンが見つかりません!!!!!")
 }
 
 func getPokemonCollection() db.PokemonCollection {
