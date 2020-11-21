@@ -45,7 +45,7 @@ jobs:
         echo "$SECRET_KEY" > secret_key
         ls
         chmod 600 secret_key
-        scp -P ${{ secrets.SAKURA_PORT }} -o 'StrictHostKeyChecking no' -i secret_key main ${SAKURA_USER}@${SAKURA_HOST}:/var/app
+        scp -P ${{ secrets.SAKURA_PORT }} -o 'StrictHostKeyChecking no' -i secret_key main ${SAKURA_USER}@${SAKURA_HOST}:~/
 
 #  deploy:
 #    runs-on: ubuntu-latest
