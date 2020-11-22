@@ -8,7 +8,7 @@ on:
 
 jobs:
   kill:
-  - name: kill main process
+    name: kill main process
     env:
       SECRET_KEY: ${{ secrets.SECRET_KEY }}
       SAKURA_USER: ${{ secrets.SAKURA_USER }}
