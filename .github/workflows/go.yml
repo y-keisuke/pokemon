@@ -35,6 +35,9 @@ jobs:
     - name: Test
       run: go test -v .
 
+    - name: kill main
+      run: pkill main
+
     - name: scp binary file
       env:
         SECRET_KEY: ${{ secrets.SECRET_KEY }}
