@@ -8,15 +8,15 @@ on:
 
 jobs:
   kill:
-    - name: kill main process
-      env:
-        SECRET_KEY: ${{ secrets.SECRET_KEY }}
-        SAKURA_USER: ${{ secrets.SAKURA_USER }}
-        SAKURA_HOST: ${{ secrets.SAKURA_HOST }}
-        SAKURA_PORT: ${{ secrets.SAKURA_PORT }}
-      run: |
-        echo "$SECRET_KEY" > secret_key
-        ssh -p ${{ secrets.SAKURA_PORT }} -o 'StrictHostKeyChecking no' -i secret_key ${SAKURA_USER}@${SAKURA_HOST} "pkill main"
+  - name: kill main process
+    env:
+      SECRET_KEY: ${{ secrets.SECRET_KEY }}
+      SAKURA_USER: ${{ secrets.SAKURA_USER }}
+      SAKURA_HOST: ${{ secrets.SAKURA_HOST }}
+      SAKURA_PORT: ${{ secrets.SAKURA_PORT }}
+    run: |
+      echo "$SECRET_KEY" > secret_key
+      ssh -p ${{ secrets.SAKURA_PORT }} -o 'StrictHostKeyChecking no' -i secret_key ${SAKURA_USER}@${SAKURA_HOST} "pkill main"
 
   Test:
     name: Build
