@@ -6,17 +6,18 @@ on:
   pull_request:
     branches: [ main ]
 
+env:
+  SECRET_KEY: ${{ secrets.SECRET_KEY }}
+  SAKURA_USER: ${{ secrets.SAKURA_USER }}
+  SAKURA_HOST: ${{ secrets.SAKURA_HOST }}
+  SAKURA_PORT: ${{ secrets.SAKURA_PORT }}
+
 jobs:
   kill:
     name: kill
     runs-on: ubuntu-latest
     steps:
       - name: kill main process
-        env:
-          SECRET_KEY: ${{ secrets.SECRET_KEY }}
-          SAKURA_USER: ${{ secrets.SAKURA_USER }}
-          SAKURA_HOST: ${{ secrets.SAKURA_HOST }}
-          SAKURA_PORT: ${{ secrets.SAKURA_PORT }}
         run: |
           echo "$SECRET_KEY" > secret_key
           chmod 600 secret_key
@@ -50,11 +51,6 @@ jobs:
       run: go test -v .
 
     - name: scp binary file
-      env:
-        SECRET_KEY: ${{ secrets.SECRET_KEY }}
-        SAKURA_USER: ${{ secrets.SAKURA_USER }}
-        SAKURA_HOST: ${{ secrets.SAKURA_HOST }}
-        SAKURA_PORT: ${{ secrets.SAKURA_PORT }}
       run: |
         echo "$SECRET_KEY" > secret_key
         chmod 600 secret_key
@@ -65,23 +61,7 @@ jobs:
     needs: Test
     steps:
       - name: excute main
-        env:
-          SECRET_KEY: ${{ secrets.SECRET_KEY }}
-          SAKURA_USER: ${{ secrets.SAKURA_USER }}
-          SAKURA_HOST: ${{ secrets.SAKURA_HOST }}
-          SAKURA_PORT: ${{ secrets.SAKURA_PORT }}
         run: |
           echo "$SECRET_KEY" > secret_key
           chmod 600 secret_key
           ssh -p ${{ secrets.SAKURA_PORT }} -o 'StrictHostKeyChecking no' -i secret_key ${SAKURA_USER}@${SAKURA_HOST} "sh /home/keisuke/build.sh"
-
-#    - uses: actions/checkout@v1
-#    - name: scp
-#      uses: lbejiuk/scp_action@v1
-#      with:
-#        public_key: ${{secrets.SECRET_KEY}}
-#        ssh_port: ${{ secrets.SAKURA_PORT }}
-#        ssh_username: ${{ secrets.SAKURA_USER }}
-#        ssh_host: ${{ secrets.SAKURA_HOST }}
-#        source: 'main'
-#        target: '/home/keisuke'
